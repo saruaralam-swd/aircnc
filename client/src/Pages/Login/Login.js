@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import PrimaryButton from "../../Components/Button/PrimaryButton";
+import { AuthContext } from "../../contexts/AuthProvider";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
+
+  // User Login
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    signIn(email, password)
+      .then((result) => {
+        toast.success("Login SuccessFully");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+
   return (
     <div className="flex justify-center items-center pt-8">
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
@@ -13,6 +32,7 @@ const Login = () => {
           </p>
         </div>
         <form
+          onSubmit={handleLogin}
           noValidate=""
           action=""
           className="space-y-6 ng-untouched ng-pristine ng-valid"

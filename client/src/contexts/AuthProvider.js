@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
     return sendEmailVerification(auth.currentUser);
   };
 
-  // 4. Google Signin
+  // 4. Google SignIn
   const signInWithGoogle = () => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider);
@@ -58,7 +58,7 @@ const AuthProvider = ({ children }) => {
   };
 
   //6. Login with Password
-  const signin = (email, password) => {
+  const signIn = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -89,7 +89,7 @@ const AuthProvider = ({ children }) => {
     verifyEmail,
     signInWithGoogle,
     logout,
-    signin,
+    signIn,
     resetPassword,
     loading,
     setLoading,
