@@ -1,9 +1,30 @@
-import React from "react";
-
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import PrimaryButton from "../../Components/Button/PrimaryButton";
+import { AuthContext } from "../../contexts/AuthProvider";
+import toast from "react-hot-toast";
 
 const Signup = () => {
+  const { createUser, loading, setLoading } = useContext(AuthContext);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const image = event.target.image.files[0].name;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    // create user
+    createUser(email, password)
+      .then((result) => {
+        toast.success("User Create Successfully");
+        console.log(result);
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+
   return (
     <div className="flex justify-center items-center pt-8">
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
@@ -12,6 +33,7 @@ const Signup = () => {
           <p className="text-sm text-gray-400">Create a new account</p>
         </div>
         <form
+          onSubmit={handleSubmit}
           noValidate=""
           action=""
           className="space-y-12 ng-untouched ng-pristine ng-valid"
@@ -25,7 +47,7 @@ const Signup = () => {
                 type="text"
                 name="name"
                 id="name"
-                required
+                // required
                 placeholder="Enter Your Name Here"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-green-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
@@ -40,7 +62,7 @@ const Signup = () => {
                 id="image"
                 name="image"
                 accept="image/*"
-                required
+                // required
               />
             </div>
             <div>
@@ -48,7 +70,7 @@ const Signup = () => {
                 Email address
               </label>
               <input
-                required
+                // required
                 type="email"
                 name="email"
                 id="email"
@@ -67,7 +89,7 @@ const Signup = () => {
                 type="password"
                 name="password"
                 id="password"
-                required
+                // required
                 placeholder="*******"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-200 focus:outline-green-500 text-gray-900"
               />
