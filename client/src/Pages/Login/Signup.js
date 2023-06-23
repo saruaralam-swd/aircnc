@@ -5,25 +5,46 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import toast from "react-hot-toast";
 
 const Signup = () => {
-  const { createUser, loading, setLoading } = useContext(AuthContext);
+  const { createUser, updateUserProfile, verifyEmail, signInWithGoogle } =
+    useContext(AuthContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const name = event.target.name.value;
-    const image = event.target.image.files[0].name;
+    // const image = event.target.image.files[0].name;
     const email = event.target.email.value;
     const password = event.target.password.value;
 
     // create user
     createUser(email, password)
       .then((result) => {
-        toast.success("User Create Successfully");
-        console.log(result);
+        console.log(result.user);
+        updateUserProfile(name, null)
+          .then((result) => {
+            verifyEmail()
+              .then(() => {
+                toast.success("Please check your mail for validation");
+              })
+              .catch((err) => console.log(err.message));
+          })
+          .catch((err) => console.log(err.message));
       })
       .catch((err) => {
         toast.error(err.message);
       });
   };
+
+  // Google SignIn
+  function handleGoogleSingIn() {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+        toast.success("Google login successfully");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  }
 
   return (
     <div className="flex justify-center items-center pt-8">
@@ -114,7 +135,11 @@ const Signup = () => {
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
         </div>
         <div className="flex justify-center space-x-4">
-          <button aria-label="Log in with Google" className="p-3 rounded-sm">
+          <button
+            onClick={handleGoogleSingIn}
+            aria-label="Log in with Google"
+            className="p-3 rounded-sm"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
