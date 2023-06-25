@@ -1,12 +1,22 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../Components/Button/PrimaryButton";
 import { AuthContext } from "../../contexts/AuthProvider";
 import toast from "react-hot-toast";
+import SmallSpinner from "../../Components/Spinner/SmallSpinner";
 
 const Signup = () => {
-  const { createUser, updateUserProfile, verifyEmail, signInWithGoogle } =
-    useContext(AuthContext);
+  const {
+    createUser,
+    updateUserProfile,
+    verifyEmail,
+    signInWithGoogle,
+    loading,
+    setLoading,
+  } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -18,21 +28,39 @@ const Signup = () => {
     // create user
     createUser(email, password)
       .then((result) => {
-        console.log(result.user);
-        updateUserProfile(name, null)
-          .then((result) => {
-            verifyEmail()
-              .then(() => {
-                toast.success("Please check your mail for validation");
-              })
-              .catch((err) => console.log(err.message));
-          })
-          .catch((err) => console.log(err.message));
+        setLoading(false);
+        userUpdate(name);
       })
       .catch((err) => {
+        setLoading(false);
         toast.error(err.message);
       });
   };
+
+  function userUpdate(name) {
+    updateUserProfile(name, null)
+      .then((result) => {
+        setLoading(false);
+        userVerify();
+      })
+      .catch((err) => {
+        setLoading(false);
+        toast.error(err.message);
+      });
+  }
+
+  function userVerify() {
+    verifyEmail()
+      .then(() => {
+        setLoading(false);
+        toast.success("Please check your mail for validation");
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        setLoading(false);
+        toast.error(err.message);
+      });
+  }
 
   // Google SignIn
   function handleGoogleSingIn() {
@@ -40,6 +68,7 @@ const Signup = () => {
       .then((result) => {
         console.log(result.user);
         toast.success("Google login successfully");
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         toast.error(err.message);
@@ -68,7 +97,7 @@ const Signup = () => {
                 type="text"
                 name="name"
                 id="name"
-                // required
+                required
                 placeholder="Enter Your Name Here"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-green-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
@@ -91,7 +120,7 @@ const Signup = () => {
                 Email address
               </label>
               <input
-                // required
+                required
                 type="email"
                 name="email"
                 id="email"
@@ -110,7 +139,7 @@ const Signup = () => {
                 type="password"
                 name="password"
                 id="password"
-                // required
+                required
                 placeholder="*******"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-200 focus:outline-green-500 text-gray-900"
               />
@@ -122,7 +151,7 @@ const Signup = () => {
                 type="submit"
                 classes="w-full px-8 py-3 font-semibold rounded-md bg-gray-900 hover:bg-gray-700 hover:text-white text-gray-100"
               >
-                Sign up
+                {loading ? <SmallSpinner /> : "Sign up"}
               </PrimaryButton>
             </div>
           </div>

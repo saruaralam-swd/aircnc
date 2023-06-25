@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return updateProfile(auth.currentUser, {
       displayName: name,
-      photoURL: photo,
+      // photoURL: photo,
     });
   };
 
@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
 
   // 4. Google SignIn
   const signInWithGoogle = () => {
-    setLoading(true);
+    // setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
