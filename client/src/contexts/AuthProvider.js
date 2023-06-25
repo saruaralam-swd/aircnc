@@ -46,7 +46,6 @@ const AuthProvider = ({ children }) => {
 
   // 4. Google SignIn
   const signInWithGoogle = () => {
-    // setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
@@ -65,7 +64,6 @@ const AuthProvider = ({ children }) => {
 
   //7. Forget Password
   const resetPassword = (email) => {
-    setLoading(true);
     return sendPasswordResetEmail(auth, email);
   };
 

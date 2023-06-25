@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../Components/Button/PrimaryButton";
 import { AuthContext } from "../../contexts/AuthProvider";
@@ -6,11 +6,12 @@ import { toast } from "react-hot-toast";
 import SmallSpinner from "../../Components/Spinner/SmallSpinner";
 
 const Login = () => {
-  const { signIn, signInWithGoogle, loading, setLoading } =
+  const { signIn, signInWithGoogle, resetPassword, loading, setLoading } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathName || "/";
+  const [userEmail, setUserEmail] = useState("");
 
   // User Login
   const handleLogin = (event) => {
@@ -31,7 +32,7 @@ const Login = () => {
   };
 
   // GoogleSinIn
-  function handleGoogleSingIn() {
+  const handleGoogleSingIn = () => {
     signInWithGoogle()
       .then((result) => {
         console.log(result.user);
@@ -41,7 +42,24 @@ const Login = () => {
       .catch((err) => {
         toast.error(err.message);
       });
-  }
+  };
+
+  const handleForgetPassword = () => {
+    if (!userEmail) {
+      toast.error("Enter your Email!");
+      return;
+    } else {
+      resetPassword(userEmail)
+        .then(() => {
+          toast.success("Password reset email sent!");
+        })
+        .catch((err) => {
+          loading(false);
+          toast.error(err.message);
+        });
+    }
+  };
+
   return (
     <div className="flex justify-center items-center pt-8">
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
@@ -63,6 +81,7 @@ const Login = () => {
                 Email address
               </label>
               <input
+                onBlur={(event) => setUserEmail(event.target.value)}
                 type="email"
                 name="email"
                 id="email"
@@ -99,7 +118,10 @@ const Login = () => {
           </div>
         </form>
         <div className="space-y-1">
-          <button className="text-xs hover:underline text-gray-400">
+          <button
+            onClick={handleForgetPassword}
+            className="text-xs hover:underline text-gray-400"
+          >
             Forgot password?
           </button>
         </div>
