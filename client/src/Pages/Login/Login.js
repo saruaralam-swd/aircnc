@@ -44,6 +44,7 @@ const Login = () => {
       });
   };
 
+  // password reset
   const handleForgetPassword = () => {
     if (!userEmail) {
       toast.error("Enter your Email!");

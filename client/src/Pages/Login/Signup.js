@@ -14,22 +14,39 @@ const Signup = () => {
     loading,
     setLoading,
   } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = (event) => {
+    setLoading(true);
     event.preventDefault();
+
     const name = event.target.name.value;
-    // const image = event.target.image.files[0].name;
     const email = event.target.email.value;
     const password = event.target.password.value;
 
-    // create user
-    createUser(email, password)
-      .then((result) => {
-        setLoading(false);
-        userUpdate(name);
+    // image upload
+    const image = event.target.image.files[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imageBb_Key}`;
+    fetch(url, {
+      method: "post",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imageData) => {
+        // create user
+        createUser(email, password)
+          .then((result) => {
+            userUpdate(name, imageData?.data?.display_url);
+          })
+          .catch((err) => {
+            setLoading(false);
+            toast.error(err.message);
+          });
       })
       .catch((err) => {
         setLoading(false);
@@ -37,10 +54,10 @@ const Signup = () => {
       });
   };
 
-  function userUpdate(name) {
-    updateUserProfile(name, null)
+  function userUpdate(name, photo) {
+    updateUserProfile(name, photo)
       .then((result) => {
-        setLoading(false);
+        toast.success("Successfully crate your account");
         userVerify();
       })
       .catch((err) => {
@@ -112,7 +129,7 @@ const Signup = () => {
                 id="image"
                 name="image"
                 accept="image/*"
-                // required
+                required
               />
             </div>
             <div>

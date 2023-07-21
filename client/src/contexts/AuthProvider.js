@@ -34,13 +34,13 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return updateProfile(auth.currentUser, {
       displayName: name,
-      // photoURL: photo,
+      photoURL: photo,
     });
   };
 
   //   3. Email Verify
   const verifyEmail = () => {
-    setLoading(true);
+    // setLoading(true);
     return sendEmailVerification(auth.currentUser);
   };
 
