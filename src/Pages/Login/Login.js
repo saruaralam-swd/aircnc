@@ -13,22 +13,37 @@ const Login = () => {
   const from = location.state?.from?.pathName || "/";
   const [userEmail, setUserEmail] = useState("");
 
-  // User Login
+  // Login with email & password
   const handleLogin = (event) => {
     event.preventDefault();
+
     const email = event.target.email.value;
     const password = event.target.password.value;
 
     signIn(email, password)
       .then((result) => {
-        toast.success("Login SuccessFully");
-        console.log(result.user);
-        navigate(from, { replace: true });
+        const user = result.user;
+        console.log(user);
+        const userData = {
+          email: user?.email,
+        };
+
+        // get jwt token
+        fetch("http://localhost:5000/jwt", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.accessToken) {
+              localStorage.setItem("Aircnc-AccessToken", data.accessToken);
+            }
+          });
       })
-      .catch((err) => {
-        setLoading(false);
-        toast.error(err.message);
-      });
+      .catch((error) => console.log(error));
   };
 
   // GoogleSinIn
