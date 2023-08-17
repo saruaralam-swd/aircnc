@@ -4,9 +4,10 @@ import PrimaryButton from "../../Components/Button/PrimaryButton";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { toast } from "react-hot-toast";
 import SmallSpinner from "../../Components/Spinner/SmallSpinner";
+import { setAuthToken } from "../../api/auth";
 
 const Login = () => {
-  const { signIn, signInWithGoogle, resetPassword, loading, setLoading } =
+  const { signIn, signInWithGoogle, resetPassword, loading } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,32 +17,13 @@ const Login = () => {
   // Login with email & password
   const handleLogin = (event) => {
     event.preventDefault();
-
     const email = event.target.email.value;
     const password = event.target.password.value;
 
     signIn(email, password)
       .then((result) => {
-        const user = result.user;
-        console.log(user);
-        const userData = {
-          email: user?.email,
-        };
-
-        // get jwt token
-        fetch("http://localhost:5000/jwt", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.accessToken) {
-              localStorage.setItem("Aircnc-AccessToken", data.accessToken);
-            }
-          });
+        setAuthToken(result?.user);
+        navigate(from, { replace: true });
       })
       .catch((error) => console.log(error));
   };
@@ -50,7 +32,7 @@ const Login = () => {
   const handleGoogleSingIn = () => {
     signInWithGoogle()
       .then((result) => {
-        console.log(result.user);
+        setAuthToken(result?.user);
         toast.success("Google login successfully");
         navigate(from, { replace: true });
       })
