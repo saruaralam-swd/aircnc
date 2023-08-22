@@ -33,7 +33,7 @@ const Home = () => {
           <div className="container pb-8 pt-2 mx-auto">
             <div className="flex flex-wrap">
               {[...Array(3)].map((exp, i) => (
-                <HomeCard />
+                <HomeCard key={i} />
               ))}
             </div>
           </div>

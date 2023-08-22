@@ -7,6 +7,7 @@ import Signup from "../Pages/Login/Signup";
 import Main from "../Layout/Main";
 import ComingSoon from "../Pages/Shared/ComingSoon";
 import Details from "../Pages/Details";
+import SearchResult from "../Pages/SearchResult";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/service-details",
         element: <Details />,
+      },
+      {
+        path: "/search-result",
+        element: <SearchResult />,
       },
     ],
   },
