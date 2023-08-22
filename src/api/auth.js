@@ -1,5 +1,3 @@
-import { Navigate } from "react-router-dom";
-
 export const setAuthToken = (user) => {
   const currentUser = {
     email: user?.email,
@@ -15,7 +13,7 @@ export const setAuthToken = (user) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      // store token
       localStorage.setItem("aircnc-token", data?.token);
-    });
+    })
+    .catch((error) => console.log(error));
 };

@@ -1,17 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../Components/Button/PrimaryButton";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { toast } from "react-hot-toast";
 import SmallSpinner from "../../Components/Spinner/SmallSpinner";
 import { setAuthToken } from "../../api/auth";
+import { Toast } from "react-hot-toast";
 
 const Login = () => {
-  const { signIn, signInWithGoogle, resetPassword, loading } =
+  const { signIn, signInWithGoogle, resetPassword, loading, setLoading } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathName || "/";
+  const from = location.state?.from?.pathname || "/";
   const [userEmail, setUserEmail] = useState("");
 
   // Login with email & password
@@ -25,7 +26,10 @@ const Login = () => {
         setAuthToken(result?.user);
         navigate(from, { replace: true });
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        setLoading(false);
+        toast.error(err.message);
+      });
   };
 
   // GoogleSinIn

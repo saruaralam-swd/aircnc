@@ -8,6 +8,8 @@ import Main from "../Layout/Main";
 import ComingSoon from "../Pages/Shared/ComingSoon";
 import Details from "../Pages/Details";
 import SearchResult from "../Pages/SearchResult";
+import PrivateRoute from "./PrivateRoute";
+import Checkout from "../Pages/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
       {
         path: "/search-result",
         element: <SearchResult />,
+      },
+      {
+        path: "/checkout",
+        element: (
+          <PrivateRoute>
+            <Checkout />
+          </PrivateRoute>
+        ),
       },
     ],
   },
