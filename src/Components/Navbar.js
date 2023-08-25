@@ -12,6 +12,7 @@ const Navbar = () => {
   const handleSingOut = () => {
     logout()
       .then((result) => {
+        setIsDropdownOpen(false);
         toast.success("Logout Successfully");
       })
       .catch((err) => {
