@@ -8,6 +8,9 @@ import ReviewHouse from "../Components/Checkout/ReviewHouse";
 
 const Checkout = () => {
   const { user } = useContext(AuthContext);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // checkout Data call homeData
   const homeData = {
     _id: "60ehjhedhjdj3434",
     location: "Dhaka, Bangladesh",
@@ -27,26 +30,17 @@ const Checkout = () => {
     ratings: 4.8,
     reviews: 64,
   };
+
   const [bookingData, setBookingData] = useState({
     homeId: homeData._id,
     hostEmail: homeData?.host?.email,
-    message: "",
+    message: "4 Rooms",
     totalPrice: parseFloat(homeData.price) + 31,
     guestEmail: user?.email,
   });
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleBooking = () => {
-    // console.log(bookingData)
-    // saveBooking(bookingData)
-    //   .then(data => {
-    //     console.log(data)
-    //     toast.success('Booking Successful!')
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //     toast.error(err?.message)
-    //   })
+    console.log(bookingData);
   };
 
   return (
@@ -120,12 +114,14 @@ const Checkout = () => {
                 </Tab>
               </div>
             </Tab.List>
+
             <Tab.Panels>
               <Tab.Panel>
+                {/* ReviewHouse component */}
                 <ReviewHouse setSelectedIndex={setSelectedIndex} />
               </Tab.Panel>
               <Tab.Panel>
-                {/* WhosComing Comp */}
+                {/* WhosComing component */}
                 <WhosComing
                   setSelectedIndex={setSelectedIndex}
                   host={homeData?.host}
@@ -134,7 +130,7 @@ const Checkout = () => {
                 />
               </Tab.Panel>
               <Tab.Panel>
-                {/* Payment Comp */}
+                {/* Payment component */}
                 <Payment handleBooking={handleBooking} />
               </Tab.Panel>
             </Tab.Panels>
