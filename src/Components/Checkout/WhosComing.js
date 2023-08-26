@@ -28,7 +28,7 @@ const WhosComing = ({
       <textarea
         className="border block my-5 p-2"
         placeholder={`Hello ${host?.name}! Cant wait to spend 4 night in your home`}
-        defaultValue={bookingData?.message}
+        value={bookingData?.message}
         onChange={(event) =>
           setBookingData({ ...bookingData, message: event.target.value })
         }

@@ -5,6 +5,8 @@ import Payment from "../Components/Checkout/Payment";
 import { Tab } from "@headlessui/react";
 import WhosComing from "../Components/Checkout/WhosComing";
 import ReviewHouse from "../Components/Checkout/ReviewHouse";
+import { saveBookings } from "../api/bookings";
+import { toast } from "react-hot-toast";
 
 const Checkout = () => {
   const { user } = useContext(AuthContext);
@@ -34,13 +36,17 @@ const Checkout = () => {
   const [bookingData, setBookingData] = useState({
     homeId: homeData._id,
     hostEmail: homeData?.host?.email,
-    message: "4 Rooms",
+    message: "",
     totalPrice: parseFloat(homeData.price) + 31,
     guestEmail: user?.email,
   });
 
   const handleBooking = () => {
-    console.log(bookingData);
+    saveBookings(bookingData)
+      .then((data) => {
+        toast.success("Booking Successful!");
+      })
+      .catch((error) => toast.error(error.message));
   };
 
   return (

@@ -4,7 +4,7 @@ export const setAuthToken = (user) => {
   };
 
   // save user in DB & get JWT
-  fetch(`${process.env.REACT_APP_API_URL}/user/${user?.email}`, {
+  fetch(`${process.env.REACT_APP_URL}/user/${user?.email}`, {
     method: "PUT",
     headers: {
       "content-type": "application/json",
