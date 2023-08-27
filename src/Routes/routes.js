@@ -10,6 +10,8 @@ import Details from "../Pages/Details";
 import SearchResult from "../Pages/SearchResult";
 import PrivateRoute from "./PrivateRoute";
 import Checkout from "../Pages/Checkout";
+import DashboardLayout from "../Layout/DashboardLayout";
+import Welcome from "../Pages/Dashboard/Welcome";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +50,17 @@ const router = createBrowserRouter([
             <Checkout />
           </PrivateRoute>
         ),
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Welcome />,
       },
     ],
   },

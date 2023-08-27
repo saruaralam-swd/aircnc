@@ -1,3 +1,6 @@
+import React from "react";
+import PrimaryButton from "../Components/Button/PrimaryButton";
+import { Link } from "react-router-dom";
 import {
   StarIcon,
   ArrowRightIcon,
@@ -7,9 +10,6 @@ import {
   BeakerIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import React from "react";
-import PrimaryButton from "../Components/Button/PrimaryButton";
-import { Link } from "react-router-dom";
 
 const Details = () => {
   let totalNights = 0;
