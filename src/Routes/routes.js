@@ -12,6 +12,8 @@ import PrivateRoute from "./PrivateRoute";
 import Checkout from "../Pages/Checkout";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Welcome from "../Pages/Dashboard/Welcome";
+import MyBookings from "../Pages/Dashboard/MyBookings";
+import BecomeAHost from "../Pages/Dashboard/BecomeAHost";
 
 const router = createBrowserRouter([
   {
@@ -63,8 +65,16 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/dashboard",
+        path: "",
         element: <Welcome />,
+      },
+      {
+        path: "my-bookings",
+        element: <MyBookings />,
+      },
+      {
+        path: "become-host",
+        element: <BecomeAHost />,
       },
     ],
   },
