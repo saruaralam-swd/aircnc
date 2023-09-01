@@ -1,6 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const MyBookings = () => {
+  const { user } = useContext(AuthContext);
+
   return (
     <div className="container mx-auto px-4 sm:px-8">
       <div className="py-8">
@@ -11,42 +14,43 @@ const MyBookings = () => {
                 <tr>
                   <th
                     scope="col"
-                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-semibold"
                   >
                     Title
                   </th>
                   <th
                     scope="col"
-                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-semibold"
                   >
                     Location
                   </th>
                   <th
                     scope="col"
-                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-semibold"
                   >
                     Price
                   </th>
                   <th
                     scope="col"
-                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-semibold"
                   >
                     From
                   </th>
                   <th
                     scope="col"
-                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-semibold"
                   >
                     To
                   </th>
                   <th
                     scope="col"
-                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-semibold"
                   >
                     Action
                   </th>
                 </tr>
               </thead>
+
               <tbody>
                 <tr>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -73,7 +77,7 @@ const MyBookings = () => {
                     </p>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">$95</p>
+                    <p className="text-gray-900 whitespace-no-wrap">12</p>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <p className="text-gray-900 whitespace-no-wrap">

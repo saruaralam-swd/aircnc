@@ -1,3 +1,4 @@
+// save bookings
 export const saveBookings = async (bookingData) => {
   const response = await fetch(`${process.env.REACT_APP_URL}/bookings`, {
     method: "POST",
@@ -6,6 +7,22 @@ export const saveBookings = async (bookingData) => {
     },
     body: JSON.stringify(bookingData),
   });
+  const data = await response.json();
+  return data;
+};
+
+// Get Booking for user
+export const getMyBookings = async (email) => {
+  const url = `${process.env.REACT_APP_URL}/bookings?email=${email}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
+
+// allBookings for Admin
+export const getAllBookings = async () => {
+  const url = `${process.env.REACT_APP_URL}/bookings`;
+  const response = await fetch(url);
   const data = await response.json();
   return data;
 };
