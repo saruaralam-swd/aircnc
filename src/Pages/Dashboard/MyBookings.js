@@ -1,26 +1,29 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { getMyBookings } from "../../api/bookings";
+import Spinner from "../../Components/Spinner/Spinner";
 
 const MyBookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    getMyBookings(user?.email).then((data) => {
-      setBookings(data);
-      setLoading(false);
-    });
+    getMyBookings(user?.email)
+      .then((data) => {
+        setBookings(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
   }, [user]);
 
   return (
     <>
       {loading ? (
-        <div className="flex h-screen justify-center items-center">
-          <p className="text-2xl font-normal">Loading...</p>
-        </div>
+        <Spinner />
       ) : (
         <div className="container mx-auto px-4 sm:px-8">
           <div className="py-8">
@@ -33,7 +36,7 @@ const MyBookings = () => {
                         scope="col"
                         className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-semibold"
                       >
-                        T
+                        Title
                       </th>
                       <th
                         scope="col"
