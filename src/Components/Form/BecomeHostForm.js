@@ -1,7 +1,7 @@
 import React from "react";
 import SmallSpinner from "../Spinner/SmallSpinner";
 
-const BecomeHostForm = ({ handleSubmit, loading }) => {
+const BecomeHostForm = ({ handleSubmit, btnLoading }) => {
   return (
     <div className="flex justify-center mt-6">
       <div className="w-full max-w-md p-8 space-y-3 text-gray-800 rounded-xl bg-gray-50">
@@ -52,9 +52,9 @@ const BecomeHostForm = ({ handleSubmit, loading }) => {
 
           <button
             type="submit"
-            className="block w-full p-3 text-center font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gradient-to-r from-emerald-500 to-lime-500 hover:bg-gray-200 hover:text-gray-700 focus:shadow-outline focus:outline-none"
+            className=" block w-full p-3 text-center font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gradient-to-r from-emerald-500 to-lime-500 hover:bg-gray-200 hover:text-gray-700 focus:shadow-outline focus:outline-none"
           >
-            {loading ? <SmallSpinner /> : "Submit Request"}
+            {btnLoading ? <SmallSpinner /> : "Submit Request"}
           </button>
         </form>
       </div>
