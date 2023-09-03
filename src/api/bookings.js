@@ -11,7 +11,7 @@ export const saveBookings = async (bookingData) => {
   return data;
 };
 
-// Get Booking for user
+// for user
 export const getMyBookings = async (email) => {
   const url = `${process.env.REACT_APP_URL}/bookings?email=${email}`;
   const response = await fetch(url);
@@ -19,7 +19,7 @@ export const getMyBookings = async (email) => {
   return data;
 };
 
-// allBookings for Admin
+// for Admin
 export const getAllBookings = async () => {
   const url = `${process.env.REACT_APP_URL}/bookings`;
   const response = await fetch(url);
